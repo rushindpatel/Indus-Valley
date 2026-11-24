@@ -1,9 +1,19 @@
 # Data
 
-Third-party data is not stored in this repository yet. `data/raw/` and
-`data/processed/` are ignored by git until the terms of use of each source
-have been confirmed. This file records where every dataset comes from and how
-to rebuild it, so the work stays reproducible.
+Third-party data is not stored in this repository. `data/raw/` and
+`data/processed/` are ignored by git, and the files are kept in private
+project storage. This file records where every dataset comes from and how to
+rebuild it, so the work stays reproducible.
+
+Permissions as of 24 November 2026:
+
+- **indusscript.in exports.** The Roja Muthiah Research Library has given the
+  project owner permission to use the data for non-commercial purposes. The
+  owner has chosen to keep the exports private all the same. Work that uses
+  them should acknowledge the Indus Research Centre, Roja Muthiah Research
+  Library, Chennai.
+- **Private copy of the Mahadevan 1977 texts.** No licence. It must stay
+  private.
 
 ## IM77 sign-pair and sign-triplet frequency tables
 

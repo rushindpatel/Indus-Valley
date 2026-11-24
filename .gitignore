@@ -5,7 +5,7 @@ __pycache__/
 .venv/
 .DS_Store
 
-# Third-party data stays out of the repository until its terms of use are
-# confirmed. See data/README.md for how to obtain and place it.
+# Third-party data stays out of the repository and is kept in private project
+# storage. See data/README.md for how to obtain and place it.
 data/raw/
 data/processed/
