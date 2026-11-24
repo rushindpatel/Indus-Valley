@@ -76,9 +76,9 @@ This was checked against two published statements:
    from the doublet table and 30 are counted too low. The doublet table is
    short by at least 68 occurrences (0.7%). The largest case is the triplet
    `183 169 407` (10 occurrences) while the pair `183 169` is not listed at
-   all. The cause cannot be settled without the inscriptions themselves.
-   `tests/test_im77_ngrams.py` pins these numbers so that a changed export is
-   noticed.
+   all. `tests/test_im77_ngrams.py` pins these numbers so that a changed
+   export is noticed. A probable cause is described under "The repeat rule"
+   below: 47 of the 49 pairs are explained by it.
 2. **Top pair is 290, not 291.** One occurrence fewer than the printed figure.
 3. **23 sign numbers never appear in a pair:** 31, 44, 85, 88, 115, 118, 144,
    165, 220, 232, 235, 266, 269, 317, 346, 362, 363, 374, 377, 378, 392, 405,
@@ -87,3 +87,92 @@ This was checked against two published statements:
 
 Treat these tables as a cross-check for statistics computed from the full
 texts, not as ground truth.
+
+## Mahadevan 1977 texts: private working copy
+
+| | |
+|---|---|
+| Source | `data/txt/indus_corpus_alt.csv` in the public GitHub repository `toddcolsen/indus_script`, branch `main` |
+| Underlying work | I. Mahadevan, *The Indus Script: Texts, Concordance and Tables* (Archaeological Survey of India, 1977) |
+| Retrieved | 24 November 2026, unmodified |
+| Licence | **None stated.** The file must not be committed here or shared. |
+| Standing | Unverified secondary copy. Who typed it in, and from which printing, is not stated. |
+
+SHA-256 of the file used:
+
+```
+24eccb275b2a3c38655fbdf266848762361e8de04d960bc2375bb3b823652b41  indus_corpus_alt.csv
+```
+
+### How to rerun the checks
+
+1. Put the file in `data/raw/m77_github_copy/indus_corpus_alt.csv`.
+2. Build the frequency tables as described above.
+3. Run:
+
+   ```
+   PYTHONPATH=src python -m indus.corpus summary data/raw/m77_github_copy/indus_corpus_alt.csv
+   PYTHONPATH=src python -m indus.corpus compare data/raw/m77_github_copy/indus_corpus_alt.csv data/processed/im77_doublets.csv data/processed/im77_triplets.csv
+   ```
+
+### What the file contains
+
+One row per line of text, 3,611 rows: Mahadevan's text number, object type,
+site, field symbol, side, line, and the signs of that line as Mahadevan sign
+numbers joined by hyphens, in printed left-to-right order. `000` marks a sign
+that was not read. The layout is described in `src/indus/corpus.py`.
+
+### How well it matches the book
+
+| Measure | Book | This copy |
+|---|---|---|
+| Texts | 2,906 | 2,906 |
+| Lines of text | 3,573 | 3,574 |
+| Distinct signs | 417 | 417 |
+| Legible sign occurrences | 13,372 | 12,870 (502 short, 3.8%) |
+| Occurrences of sign 342 | 1,395 | 1,345 |
+| Texts from Harappa / Chanhudaro | 985 / 66 | 979 / 72 |
+| Texts from the other five site groups | as printed | identical |
+
+The copy also holds 1,286 signs coded as not read. A likely reason for the
+missing 502 is that the copy blanks signs the book prints as doubtful, which
+the book still counts. This has not been confirmed against the printed texts.
+
+### How well it matches the frequency tables
+
+| | Table | Plain count from this copy | Sequence types with identical counts |
+|---|---|---|---|
+| Pairs | 9,692 occurrences | 9,271 (95.7%) | 2,328 of 2,757 (84%) |
+| Triplets | 6,517 occurrences | 6,124 (94.0%) | 3,298 of 3,709 (89%) |
+
+### The repeat rule
+
+Where the copy has more of a pair than the doublet table (92 occurrences),
+nearly all cases follow one pattern. The table appears to:
+
+1. skip a pair when its right-hand sign already stands further left in the
+   same line, and
+2. count a doubled sign once per line, however often it is doubled there.
+
+Counting the copy this way (`count_pairs_repeat_rule`) leaves 3 occurrences
+above the table instead of 92. It also accounts for 47 of the 49 pairs on
+which the doublet and triplet tables disagree. The pairs `192 342` and
+`387 59` are not explained. Example: ten lines read
+`169-183-169-407-089-336-065`; the pair `183 169` is absent from the doublet
+table, while the triplet `183 169 407` is listed 10 times.
+
+The rule is inferred, not documented, and it was inferred from an unverified
+copy. The triplet table shows the same effect only in part. Treat it as a
+lead to confirm against verified texts.
+
+### Known faults in the copy
+
+- Text 2632 has two hyphens in a row: a sign is missing.
+- Texts 1030 and 2084 have a `LENGTH` that does not match their signs.
+- 37 rows carry no signs (sides of objects without text).
+
+### What it may be used for
+
+Building and testing code, and first-pass statistics by site and object type.
+No number from this copy goes into anything published. Published results must
+come from a verified source.
